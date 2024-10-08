@@ -47,7 +47,7 @@ setup(
     python_requires=">=3.8",
     install_requires=["tutor>=18.0.0,<19.0.0", "tutor-mfe>=18.0.0,<19.0.0"],
     extras_require={"dev": "tutor[dev]>=18.0.0,<19.0.0"},
-    entry_points={"tutor.plugin.v1": ["indigo = tutorindigo.plugin"]},
+    entry_points={"tutor.plugin.v1": ["indigo-stepwisemath = tutorindigo.plugin"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
