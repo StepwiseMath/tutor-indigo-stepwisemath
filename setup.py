@@ -25,7 +25,7 @@ ABOUT = load_about()
 
 
 setup(
-    name="tutor-indigo",
+    name="tutor-indigo-stepwisemath",
     version=ABOUT["__version__"],
     url="https://github.com/StepwiseMath/tutor-indigo-stepwisemath",
     project_urls={
