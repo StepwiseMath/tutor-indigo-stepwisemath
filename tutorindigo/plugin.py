@@ -112,7 +112,7 @@ hooks.Filters.ENV_PATCHES.add_items(
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
@@ -134,7 +134,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
@@ -148,7 +148,7 @@ COPY indigo/env.config.jsx /openedx/app/
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
@@ -162,7 +162,7 @@ COPY indigo/env.config.jsx /openedx/app/
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
@@ -176,7 +176,7 @@ COPY indigo/env.config.jsx /openedx/app/
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
