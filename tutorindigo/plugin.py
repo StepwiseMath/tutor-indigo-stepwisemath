@@ -112,7 +112,7 @@ hooks.Filters.ENV_PATCHES.add_items(
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run i18n_extract && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
@@ -124,64 +124,6 @@ COPY indigo/env.config.jsx /openedx/app/
             "mfe-dockerfile-post-npm-install-authn",
             """
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
-""",
-        ),
-        # Tutor-Indigo v2.1 targets the styling updates in discussions and learner-dashboard MFE
-        # brand-openedx is related to styling updates while others are for header and footer updates
-        (
-            "mfe-dockerfile-post-npm-install-discussions",
-            """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
-
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
-RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
-
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-learner-dashboard",
-            """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
-
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
-RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
-
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-profile",
-            """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
-
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
-RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
-
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-account",
-            """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
-
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run build
-RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
-
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-COPY indigo/env.config.jsx /openedx/app/
 """,
         ),
     ]
