@@ -109,12 +109,14 @@ hooks.Filters.ENV_PATCHES.add_items(
         (
             "mfe-dockerfile-post-npm-install-learning",
             """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/frontend-component-header@/openedx/app/frontend-component-header'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+RUN cd /openedx/app/frontend-component-header && npm link
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
 
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 """,
         ),
@@ -129,34 +131,41 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
         (
             "mfe-dockerfile-post-npm-install-discussions",
             """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/frontend-component-header@/openedx/app/frontend-component-header'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+RUN cd /openedx/app/frontend-component-header && npm link
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
 
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 """,
         ),
         (
             "mfe-dockerfile-post-npm-install-learner-dashboard",
             """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/frontend-component-header@/openedx/app/frontend-component-header'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+RUN cd /openedx/app/frontend-component-header && npm link
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
 
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 """,
         ),
         (
             "mfe-dockerfile-post-npm-install-profile",
             """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/frontend-component-header@/openedx/app/frontend-component-header'
+RUN cd /openedx/app/frontend-component-header && npm link
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 """,
@@ -164,12 +173,14 @@ COPY indigo/env.config.jsx /openedx/app/
         (
             "mfe-dockerfile-post-npm-install-account",
             """
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/frontend-component-header@/openedx/app/frontend-component-header'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+RUN cd /openedx/app/frontend-component-header && npm link
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
 
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 """,
         ),
