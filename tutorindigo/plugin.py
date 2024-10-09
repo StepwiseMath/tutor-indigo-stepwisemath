@@ -114,7 +114,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
@@ -136,7 +136,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
@@ -150,7 +150,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
@@ -164,7 +164,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
@@ -178,7 +178,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd . && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
