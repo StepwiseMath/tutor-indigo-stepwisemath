@@ -131,7 +131,7 @@ RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/fro
 
 # 2.b) install peer dependencies
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install -g install-peerdeps
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && install-peerdeps --dev -Y ./package.json
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && install-peerdeps --dev -Y /openedx/app/frontend-component-header/package.json
 
 
 # 2.c) install and build the header component
