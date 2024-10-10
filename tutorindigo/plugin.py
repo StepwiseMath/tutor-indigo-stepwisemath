@@ -109,23 +109,97 @@ hooks.Filters.ENV_PATCHES.add_items(
         (
             "mfe-dockerfile-post-npm-install-learning",
             """
+# =============================================================================            
+# begin patch: mfe-dockerfile-post-npm-install-learning
+# -----------------------------------------------------------------------------
+
+# 1.) install the branding package
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
+# 2.) install the header component
+# note: this is the original code, that works perfectly.
+# -------------------------------------
+# RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
+# note: the source for the npm package is https://github.com/edly-io/frontend-component-header
+# note: the Docker build and resulting deployment work as expected.
+# -------------------------------------
+
+# new replacement code. this is a fork of https://github.com/edly-io/frontend-component-header
+# -------------------------------------
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run i18n_extract && npm run build
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm install @edx/frontend-platform prop-types react react-dom @openedx/paragon
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm install '@edx/frontend-component-header@/openedx/app/frontend-component-header/'
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm install
+# note: the Docker build works, but the resulting deployment raises this js console browser error:
+# TypeError: Cannot read properties of undefined (reading 'getLoginRedirectUrl')
+#
+# the error is raised by the following ReactJS module -- src/learning-header/AnonymousUserMenu.jsx -- 
+# in the forked header component https://github.com/StepwiseMath/frontend-component-header.git:
+#     import React from 'react';
 
+#     import { getConfig } from '@edx/frontend-platform';
+#     import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
+#     import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+#     import { Button } from '@openedx/paragon';
+
+#     import genericMessages from '../generic/messages';
+
+#     const AnonymousUserMenu = ({ intl }) => (
+#       <div>
+#         <Button
+#           className="mr-3"
+#           variant="outline-primary"
+#           href={`${getConfig().LMS_BASE_URL}/register?next=${encodeURIComponent(global.location.href)}`}
+#         >
+#           {intl.formatMessage(genericMessages.registerSentenceCase)}
+#         </Button>
+#         <Button
+#           variant="primary"
+#           href={`${getLoginRedirectUrl(global.location.href)}`}
+#         >
+#           {intl.formatMessage(genericMessages.signInSentenceCase)}
+#         </Button>
+#       </div>
+#     );
+
+#     AnonymousUserMenu.propTypes = {
+#       intl: intlShape.isRequired,
+#     };
+
+#     export default injectIntl(AnonymousUserMenu);
+
+# -------------------------------------
+
+# note: the broken import getLoginRedirectUrl from the frontend-platform/auth module is installed during the 'npm clean-install' step
+# in 'FROM base AS learning-common'. It appears that npm is able to automatically link the frontend-platform/auth module to the header component when 
+# installing from the npm registry, but not when installing from a local directory. My commandds above that include 'npm link' are intended to mitigate
+# this issue, but they do not work as expected. I will need to investigate further.
+
+
+# 3.) install the footer component
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
+
+# -----------------------------------------------------------------------------
+# end patch mfe-dockerfile-post-npm-install-learning
+# =============================================================================            
 """,
         ),
         (
             "mfe-dockerfile-post-npm-install-authn",
             """
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+""",
+        ),
+        # copy node_modules to the openedx build directory
+        (
+            "mfe-dockerfile-production-final",
+            """
+# mcdaniel: Copy node_modules to the final container so that we can audit the final results.
+COPY /openedx/app/node_modules/ /openedx/app/node_modules/
 """,
         ),
     ]
