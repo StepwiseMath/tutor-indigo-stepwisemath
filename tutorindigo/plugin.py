@@ -199,7 +199,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
             "mfe-dockerfile-production-final",
             """
 # mcdaniel: Copy node_modules to the final container so that we can audit the final results.
-COPY /openedx/app/node_modules/ /openedx/app/node_modules/
+COPY --from=learning-prod /openedx/app/node_modules/ /openedx/app/node_modules/
 """,
         ),
     ]
