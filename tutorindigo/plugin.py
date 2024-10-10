@@ -126,19 +126,13 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 
 # new replacement code. this is a fork of https://github.com/edly-io/frontend-component-header
 # -------------------------------------
-# 2.a) install frontend-component-header from source
+# 2.a) clone frontend-component-header source
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 
-# 2.b) install peer dependencies
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm install -g install-peerdeps
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && install-peerdeps --dev -Y @edx/frontend-component-header
-
-
-# 2.c) install and build the header component
+# 2.b) install and build the header component from source
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run i18n_extract && npm run build
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm install
 
-# 2.d) link frontend-component-header to the openedx/app directory
+# 2.c) link frontend-component-header to the openedx/app directory
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
