@@ -121,9 +121,10 @@ RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 
 # 3) install frontend-component-header from source
-RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link
-RUN cd /openedx/app && npm link @edx/frontend-component-header
+#    note: these are cache-busting steps.
+RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
+RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
+RUN cd /openedx/app && npm link @edx/frontend-component-header && echo $(date +%s)
 
 
 # -----------------------------------------------------------------------------
