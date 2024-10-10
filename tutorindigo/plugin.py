@@ -116,16 +116,6 @@ hooks.Filters.ENV_PATCHES.add_items(
 # 1.) install the branding package
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
-# 2.) install the header component
-# note: this is the original code, that works perfectly.
-# -------------------------------------
-# RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
-# note: the source for the npm package is https://github.com/edly-io/frontend-component-header
-# note: the Docker build and resulting deployment work as expected.
-# -------------------------------------
-
-# new replacement code. this is a fork of https://github.com/edly-io/frontend-component-header
-# -------------------------------------
 # 2.a) clone frontend-component-header source
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 
@@ -136,55 +126,11 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend
 RUN cd /openedx/app/frontend-component-header && npm link
 RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/ && npm link @edx/frontend-component-header
 
-# note: the Docker build works, but the resulting deployment raises this js console browser error:
-# TypeError: Cannot read properties of undefined (reading 'getLoginRedirectUrl')
-#
-# the error is raised by the following ReactJS module -- src/learning-header/AnonymousUserMenu.jsx -- 
-# in the forked header component https://github.com/StepwiseMath/frontend-component-header.git:
-#     import React from 'react';
-
-#     import { getConfig } from '@edx/frontend-platform';
-#     import { getLoginRedirectUrl } from '@edx/frontend-platform/auth';
-#     import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-#     import { Button } from '@openedx/paragon';
-
-#     import genericMessages from '../generic/messages';
-
-#     const AnonymousUserMenu = ({ intl }) => (
-#       <div>
-#         <Button
-#           className="mr-3"
-#           variant="outline-primary"
-#           href={`${getConfig().LMS_BASE_URL}/register?next=${encodeURIComponent(global.location.href)}`}
-#         >
-#           {intl.formatMessage(genericMessages.registerSentenceCase)}
-#         </Button>
-#         <Button
-#           variant="primary"
-#           href={`${getLoginRedirectUrl(global.location.href)}`}
-#         >
-#           {intl.formatMessage(genericMessages.signInSentenceCase)}
-#         </Button>
-#       </div>
-#     );
-
-#     AnonymousUserMenu.propTypes = {
-#       intl: intlShape.isRequired,
-#     };
-
-#     export default injectIntl(AnonymousUserMenu);
-
-# -------------------------------------
-
-# note: the broken import getLoginRedirectUrl from the frontend-platform/auth module is installed during the 'npm clean-install' step
-# in 'FROM base AS learning-common'. It appears that npm is able to automatically link the frontend-platform/auth module to the header component when 
-# installing from the npm registry, but not when installing from a local directory. My commandds above that include 'npm link' are intended to mitigate
-# this issue, but they do not work as expected. I will need to investigate further.
-
-
 # 3.) install the footer component
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
+
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install
 
 # -----------------------------------------------------------------------------
 # end patch mfe-dockerfile-post-npm-install-learning
