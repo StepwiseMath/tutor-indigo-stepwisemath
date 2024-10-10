@@ -117,8 +117,9 @@ hooks.Filters.ENV_PATCHES.add_items(
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
 # 2) install frontend-component-header from source
-RUN npm install '@edx/frontend-component-header@git+https://github.com/StepwiseMath/frontend-component-header.git#open-release/redwood.master'
-RUN cd /openedx/app/node_modules/@edx/frontend-component-header && npm run i18n_extract && npm run build && npm link
+RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
+RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link
+RUN cd /openedx/app && npm link @edx/frontend-component-header
 
 # 3.) install the footer component
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
