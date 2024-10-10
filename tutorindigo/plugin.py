@@ -116,17 +116,15 @@ hooks.Filters.ENV_PATCHES.add_items(
 # 1.) install the branding package
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
-# 2.a) clone frontend-component-header source
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
-
-# 2.b) install and build the header component from source
-RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link
-RUN npm link @edx/frontend-component-header
+# 2) install frontend-component-header from source
+RUN npm install '@edx/frontend-component-header@git+https://github.com/StepwiseMath/frontend-component-header.git#open-release/redwood.master'
+RUN cd /openedx/app/node_modules/@edx/frontend-component-header && npm run i18n_extract && npm run build && npm link
 
 # 3.) install the footer component
 RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
 
+# 4.) a catch-all npm install command to install any remaining dependencies. DO WE REALLY NEED THIS?
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install
 
 # -----------------------------------------------------------------------------
@@ -145,6 +143,8 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
             "mfe-dockerfile-production-final",
             """
 # mcdaniel: Copy node_modules to the final container so that we can audit the final results.
+# This is a temporary measure until we can figure out how to get the forked header to run inside the browser. It's HUGE.
+# DON'T DO THIS IN PRODUCTION
 COPY --from=learning-prod /openedx/app/ /openedx/app/
 """,
         ),
