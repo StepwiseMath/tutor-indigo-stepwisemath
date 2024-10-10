@@ -113,20 +113,18 @@ hooks.Filters.ENV_PATCHES.add_items(
 # begin patch: mfe-dockerfile-post-npm-install-learning
 # -----------------------------------------------------------------------------
 
-# 1.) install the branding package
+# 1) install the branding package
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 
-# 2) install frontend-component-header from source
+# 2) install the footer component
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+COPY indigo/env.config.jsx /openedx/app/
+
+# 3) install frontend-component-header from source
 RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link
 RUN cd /openedx/app && npm link @edx/frontend-component-header
 
-# 3.) install the footer component
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-COPY indigo/env.config.jsx /openedx/app/
-
-# 4.) a catch-all npm install command to install any remaining dependencies. DO WE REALLY NEED THIS?
-RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install
 
 # -----------------------------------------------------------------------------
 # end patch mfe-dockerfile-post-npm-install-learning
