@@ -130,7 +130,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install '@edx/brand@
 RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header
 
 # 2.b) install and build the header component from source
-RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci && npm run i18n_extract && npm run build
+RUN --mount=type=cache,target=/root/.npm,sharing=shared cd /openedx/app/frontend-component-header && npm ci --no-bin-links && npm run i18n_extract && npm run build
 
 # 2.c) link frontend-component-header to the openedx/app directory
 RUN cd /openedx/app/frontend-component-header && npm link
@@ -202,7 +202,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
             "mfe-dockerfile-production-final",
             """
 # mcdaniel: Copy node_modules to the final container so that we can audit the final results.
-COPY --from=learning-prod /openedx/app/node_modules/ /openedx/app/node_modules/
+COPY --from=learning-prod /openedx/app/ /openedx/app/
 """,
         ),
     ]
