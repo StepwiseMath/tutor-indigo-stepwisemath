@@ -122,12 +122,17 @@ COPY indigo/env.config.jsx /openedx/app/
 
 # 3) install frontend-component-header from source
 #    note: these are cache-busting steps.
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
 
-# RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
-# RUN cd /openedx/app/frontend-component-header && npm install react@17.0.2 react-dom@17.0.2
-# RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
-# RUN cd /openedx/app && npm link @edx/frontend-component-header && echo $(date +%s)
+# this is the original header package that we're replacing ...
+# -----------------
+# RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
+
+# this is the forked header package that we're installing
+# -----------------
+RUN git clone https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
+RUN cd /openedx/app/frontend-component-header && npm install react@17.0.2 react-dom@17.0.2
+RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
+RUN cd /openedx/app && npm link @edx/frontend-component-header && echo $(date +%s)
 
 
 # -----------------------------------------------------------------------------
