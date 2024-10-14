@@ -127,12 +127,15 @@ COPY indigo/env.config.jsx /openedx/app/
 # -----------------
 # RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^3.1.3'
 
-# this is the forked header package that we're installing
+# this was the forked header package that we tried installing
 # -----------------
-RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
-RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
-RUN cd /openedx/app/node_modules/@edx && rm -r frontend-component-header && ln -s /openedx/app/frontend-component-header frontend-component-header && echo $(date +%s)
+# RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
+# RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
+# RUN cd /openedx/app/node_modules/@edx && rm -r frontend-component-header && ln -s /openedx/app/frontend-component-header frontend-component-header && echo $(date +%s)
 
+# this is the published forked header package that we're installing
+# -----------------
+RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.0'
 
 # -----------------------------------------------------------------------------
 # end patch mfe-dockerfile-post-npm-install-learning
