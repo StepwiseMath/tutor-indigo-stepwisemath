@@ -135,8 +135,7 @@ COPY indigo/env.config.jsx /openedx/app/
 
 # this is the published forked header package that we're installing
 # -----------------
-# RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.0'
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^3.1.3'
+RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.1'
 
 # -----------------------------------------------------------------------------
 # end patch mfe-dockerfile-post-npm-install-learning
@@ -156,7 +155,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
 # mcdaniel: Copy node_modules to the final container so that we can audit the final results.
 # This is a temporary measure until we can figure out how to get the forked header to run inside the browser. It's HUGE.
 # DON'T DO THIS IN PRODUCTION
-COPY --from=learning-prod /openedx/app/ /openedx/app/
+# COPY --from=learning-prod /openedx/app/ /openedx/app/
 """,
         ),
     ]
