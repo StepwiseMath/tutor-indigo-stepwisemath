@@ -135,7 +135,7 @@ COPY indigo/env.config.jsx /openedx/app/
 
 # this is the published forked header package that we're installing
 # -----------------
-RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.1'
+RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.2'
 
 # -----------------------------------------------------------------------------
 # end patch mfe-dockerfile-post-npm-install-learning
