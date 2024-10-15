@@ -1,6 +1,17 @@
 Indigo, a cool blue theme for Open edX
 ======================================
 
+This is the primary mfe build tool for StepwiseMath's Indigo theme for Open edX. This repo does three things:
+
+1. It is scaffolding for the mfe build process.
+2. Beginning with Redwood, we now use the Overhang.io Indigo theme as a replacement for the legacy StepwiseMath custom theme repo `StepwiseMath/stepwise-edx-theme <https://github.com/StepwiseMath/stepwise-edx-theme>`_
+3. it is the top-level tool for implementing customizations to the MFE UI.
+
+Note that the mfe build process relies on two forked repositories:
+
+- `StepwiseMath/brand-openedx <https://github.com/StepwiseMath/brand-openedx>`_
+- `StepwiseMath/frontend-component-header <https://github.com/StepwiseMath/frontend-component-header>`_
+
 Indigo is an elegant, customizable theme for `Open edX <https://openedx.org>`__.
 
 .. image:: ./screenshots/01-landing-page.png
