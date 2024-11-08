@@ -4,6 +4,7 @@ import os
 import typing as t
 
 import importlib_resources
+from tutor import config as tutor_config
 from tutor import hooks
 from tutor.__about__ import __version_suffix__
 
@@ -18,6 +19,7 @@ if __version_suffix__:
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
     "defaults": {
+        "STEPWISEMATH_ENV": "prod",
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
@@ -101,6 +103,10 @@ hooks.Filters.CONFIG_UNIQUE.add_items(
 )
 hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
+# mcdaniel: Load custom configuration parameter for StepwiseMath environment
+hooks.Filters.CONFIG_DEFAULTS.add_items(
+    [("STEPWISEMATH_ENV", config["defaults"]["STEPWISEMATH_ENV"])]
+)
 
 hooks.Filters.ENV_PATCHES.add_items(
     [
@@ -110,8 +116,8 @@ hooks.Filters.ENV_PATCHES.add_items(
         (
             "mfe-dockerfile-pre-npm-install-learning",
             """
-ENV STEPWISEMATH_ENV='prod'
-"""
+ENV STEPWISEMATH_ENV='{{ STEPWISEMATH_ENV }}'
+""",
         ),
         # MFE will install header version 3.0.x and will include indigo-footer as a
         # separate package for use in env.config.jsx
