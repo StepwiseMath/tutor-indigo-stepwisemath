@@ -38,6 +38,7 @@ The Indigo theme will be automatically enabled if you have not previously define
 Configuration
 -------------
 
+- ``STEPWISEMATH_CONFIG_ENV`` (default: "prod")
 - ``INDIGO_WELCOME_MESSAGE`` (default: "The place for all your online learning")
 - ``INDIGO_PRIMARY_COLOR`` (default: "#3b85ff")
 - ``INDIGO_FOOTER_NAV_LINKS`` (default: ``[{"title": "About", "url": "/about"}, {"title": "Contact", "url": "/contact"}]``)
