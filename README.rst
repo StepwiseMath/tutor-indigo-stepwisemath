@@ -26,8 +26,9 @@ Indigo was specially developed to be used with `Tutor <https://docs.tutor.edly.i
 
 Install and enable Indigo plugin::
 
-    tutor plugins install indigo
-    tutor plugins enable indigo
+    pip install git+https://github.com/StepwiseMath/tutor-indigo-stepwisemath
+    tutor plugins install indigo-stepwisemath
+    tutor plugins enable indigo-stepwisemath
     tutor local launch
 
 The Indigo theme will be automatically enabled if you have not previously defined a theme. To override an existing theme, use the `settheme command <https://docs.tutor.edly.io/local.html#setting-a-new-theme>`__::
