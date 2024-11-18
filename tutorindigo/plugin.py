@@ -114,7 +114,7 @@ hooks.Filters.ENV_PATCHES.add_items(
         # to determine the AWS S3 bucket from which to serve custom css at run time.
         # see https://github.com/StepwiseMath/frontend-component-header/blob/open-release/redwood.master/src/learning-header/LearningHeader.jsx#L44
         (
-            "mfe-dockerfile-pre-npm-install-learning",
+            "mfe-dockerfile-base",
             """
 ENV STEPWISEMATH_ENV='{{ STEPWISEMATH_ENV }}'
 """,
