@@ -105,7 +105,7 @@ hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 # mcdaniel: Load custom configuration parameter for StepwiseMath environment
 hooks.Filters.CONFIG_DEFAULTS.add_items(
-    [("STEPWISEMATH_ENV", config["defaults"]["STEPWISEMATH_ENV"])]
+    [("STEPWISEMATH_CONFIG_ENV", config["defaults"]["STEPWISEMATH_ENV"])]
 )
 
 hooks.Filters.ENV_PATCHES.add_items(
@@ -116,7 +116,7 @@ hooks.Filters.ENV_PATCHES.add_items(
         (
             "mfe-dockerfile-base",
             """
-ENV STEPWISEMATH_ENV='{{ STEPWISEMATH_ENV }}'
+ENV STEPWISEMATH_ENV={{ STEPWISEMATH_CONFIG_ENV }}
 """,
         ),
         # MFE will install header version 3.0.x and will include indigo-footer as a
@@ -206,10 +206,12 @@ for filename in javascript_files:
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 """,
         ),
+        # mcdaniel nov-2024: add STEPWISEMATH_ENV to the MFE_CONFIG
         (
             "openedx-lms-production-settings",
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
+MFE_CONFIG['STEPWISEMATH_ENV'] = {{ STEPWISEMATH_ENV }}
 """,
         ),
     ]
