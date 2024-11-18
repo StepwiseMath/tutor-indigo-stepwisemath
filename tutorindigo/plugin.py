@@ -110,15 +110,6 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
 
 hooks.Filters.ENV_PATCHES.add_items(
     [
-        # STEPWISEMATH_ENV is consumed by the openedx MFE component @stepwisemath/frontend-component-header
-        # to determine the AWS S3 bucket from which to serve custom css at run time.
-        # see https://github.com/StepwiseMath/frontend-component-header/blob/open-release/redwood.master/src/learning-header/LearningHeader.jsx#L44
-        (
-            "mfe-dockerfile-base",
-            """
-ENV STEPWISEMATH_ENV={{ STEPWISEMATH_CONFIG_ENV }}
-""",
-        ),
         # MFE will install header version 3.0.x and will include indigo-footer as a
         # separate package for use in env.config.jsx
         (
