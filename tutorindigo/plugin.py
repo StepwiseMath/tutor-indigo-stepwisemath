@@ -19,9 +19,9 @@ if __version_suffix__:
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
     "defaults": {
-        "ENV": "prod",
+        "STEPWISEMATH_ENV": "prod",
         "VERSION": __version__,
-        "WELCOME_MESSAGE": "The place for all your online learning",
+        "WELCOME_MESSAGE": "Welcome to Stepwise Math online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
         "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
@@ -197,12 +197,12 @@ for filename in javascript_files:
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 """,
         ),
-        # mcdaniel nov-2024: add STEPWISEMATH_ENV to the MFE_CONFIG
+        # mcdaniel nov-2024: add INDIGO_STEPWISEMATH_ENV to the MFE_CONFIG
         (
             "openedx-lms-production-settings",
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
-MFE_CONFIG['STEPWISEMATH_ENV'] = {{ STEPWISEMATH_CONFIG_ENV }}
+MFE_CONFIG['INDIGO_STEPWISEMATH_ENV'] = {{ INDIGO_STEPWISEMATH_ENV }}
 """,
         ),
     ]
