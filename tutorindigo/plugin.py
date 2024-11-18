@@ -19,7 +19,7 @@ if __version_suffix__:
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
     "defaults": {
-        "STEPWISEMATH_ENV": "prod",
+        "ENV": "prod",
         "VERSION": __version__,
         "WELCOME_MESSAGE": "The place for all your online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
@@ -105,7 +105,7 @@ hooks.Filters.CONFIG_OVERRIDES.add_items(list(config["overrides"].items()))
 
 # mcdaniel: Load custom configuration parameter for StepwiseMath environment
 hooks.Filters.CONFIG_DEFAULTS.add_items(
-    [("STEPWISEMATH_CONFIG_ENV", config["defaults"]["STEPWISEMATH_ENV"])]
+    [("STEPWISEMATH_CONFIG_ENV", config["defaults"]["ENV"])]
 )
 
 hooks.Filters.ENV_PATCHES.add_items(
@@ -211,7 +211,7 @@ MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
             "openedx-lms-production-settings",
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
-MFE_CONFIG['STEPWISEMATH_ENV'] = {{ STEPWISEMATH_ENV }}
+MFE_CONFIG['STEPWISEMATH_ENV'] = {{ STEPWISEMATH_CONFIG_ENV }}
 """,
         ),
     ]
