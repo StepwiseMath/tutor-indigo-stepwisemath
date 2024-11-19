@@ -193,12 +193,13 @@ for filename in javascript_files:
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 """,
         ),
-        # mcdaniel nov-2024: add INDIGO_STEPWISEMATH_ENV to the MFE_CONFIG
+        # mcdaniel nov-2024: add INDIGO_STEPWISEMATH_ENV and INDIGO_STEPWISEMATH_PWRCSS_URL to the MFE_CONFIG
         (
             "openedx-lms-production-settings",
             """
 MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
 MFE_CONFIG['INDIGO_STEPWISEMATH_ENV'] = "{{ INDIGO_STEPWISEMATH_ENV }}"
+MFE_CONFIG['INDIGO_STEPWISEMATH_PWRCSS_URL'] = "https://swm-openedx-us-{{ INDIGO_STEPWISEMATH_ENV }}-storage.s3.us-east-2.amazonaws.com/static/css/swpwrxblock.css"
 """,
         ),
     ]
