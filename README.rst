@@ -7,6 +7,7 @@ This is the primary mfe build tool for StepwiseMath's Indigo theme for Open edX.
 2. Beginning with Redwood, we now use the Overhang.io Indigo theme as a replacement for the legacy StepwiseMath custom theme repo `StepwiseMath/stepwise-edx-theme <https://github.com/StepwiseMath/stepwise-edx-theme>`_
 3. It is the top-level tool for implementing customizations to the MFE UI.
 4. Adds INDIGO_STEPWISEMATH_ENV, INDIGO_STEPWISEMATH_PWRCSS_URL to the openedx `MFE_CONFIG API <https://web.stepwisemath.ai/api/mfe_config/v1>`_. These values in turn are consumed by `StepwiseMath/frontend-component-header <https://github.com/StepwiseMath/frontend-component-header>`_ and added to the head of the ReactJS DOM.
+5. Sets the following MFE parameters: SITE_NAME, FAVICON_URL, LOGO_URL, LOGO_WHITE_URL, LOGO_TRADEMARK_URL
 
 Note that the mfe build process relies on two forked repositories:
 
