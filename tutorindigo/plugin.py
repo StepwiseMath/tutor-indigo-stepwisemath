@@ -4,6 +4,7 @@ import os
 import typing as t
 
 import importlib_resources
+from tutor import config as tutor_config
 from tutor import hooks
 from tutor.__about__ import __version_suffix__
 
@@ -18,10 +19,11 @@ if __version_suffix__:
 config: t.Dict[str, t.Dict[str, t.Any]] = {
     # Add here your new settings
     "defaults": {
+        "STEPWISEMATH_ENV": "prod",
         "VERSION": __version__,
-        "WELCOME_MESSAGE": "The place for all your online learning",
-        "ENABLE_DARK_THEME": False,
+        "WELCOME_MESSAGE": "Welcome to Stepwise Math online learning",
         "PRIMARY_COLOR": "#15376D",  # Indigo
+        "ENABLE_DARK_TOGGLE": True,
         # Footer links are dictionaries with a "title" and "url"
         # To remove all links, run:
         # tutor config save --set INDIGO_FOOTER_NAV_LINKS=[]
@@ -109,58 +111,53 @@ hooks.Filters.ENV_PATCHES.add_items(
         (
             "mfe-dockerfile-post-npm-install-learning",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
+# =============================================================================            
+# begin patch: mfe-dockerfile-post-npm-install-learning
+# -----------------------------------------------------------------------------
 
+# 1) install the branding package
+RUN npm install '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
+
+# 2) install the footer component
+RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
 COPY indigo/env.config.jsx /openedx/app/
+
+# 3) install frontend-component-header from source
+#    note: these are cache-busting steps.
+
+# this is the original header package that we're replacing ...
+# -----------------
+# RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@^3.1.3'
+
+# this was the forked header package that we tried installing
+# -----------------
+# RUN git clone -b open-release/redwood.master https://github.com/StepwiseMath/frontend-component-header.git /openedx/app/frontend-component-header && echo $(date +%s)
+# RUN cd /openedx/app/frontend-component-header && npm install && npm run i18n_extract && npm run build && npm link && echo $(date +%s)
+# RUN cd /openedx/app/node_modules/@edx && rm -r frontend-component-header && ln -s /openedx/app/frontend-component-header frontend-component-header && echo $(date +%s)
+
+# this is the published forked header package that we're installing
+# -----------------
+RUN npm install '@edx/frontend-component-header@npm:@stepwisemath/frontend-component-header@^1.0.3'
+
+# -----------------------------------------------------------------------------
+# end patch mfe-dockerfile-post-npm-install-learning
+# =============================================================================            
 """,
         ),
         (
             "mfe-dockerfile-post-npm-install-authn",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
+RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'
 """,
         ),
-        # Tutor-Indigo v2.1 targets the styling updates in discussions and learner-dashboard MFE
-        # brand-openedx is related to styling updates while others are for header and footer updates
+        # copy node_modules to the openedx build directory
         (
-            "mfe-dockerfile-post-npm-install-discussions",
+            "mfe-dockerfile-production-final",
             """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-learner-dashboard",
-            """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-profile",
-            """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-
-COPY indigo/env.config.jsx /openedx/app/
-""",
-        ),
-        (
-            "mfe-dockerfile-post-npm-install-account",
-            """
-RUN npm install '@edx/brand@npm:@edly-io/indigo-brand-openedx@^2.0.0'{% if INDIGO_ENABLE_DARK_THEME %} --theme=dark{% endif %}
-RUN npm install '@edx/frontend-component-header@npm:@edly-io/indigo-frontend-component-header@~3.0.0'
-RUN npm install @edly-io/indigo-frontend-component-footer@^2.0.0
-
-COPY indigo/env.config.jsx /openedx/app/
+# mcdaniel: Copy node_modules to the final container so that we can audit the final results.
+# This is a temporary measure until we can figure out how to get the forked header to run inside the browser. It's HUGE.
+# DON'T DO THIS IN PRODUCTION
+# COPY --from=learning-prod /openedx/app/ /openedx/app/
 """,
         ),
     ]
@@ -180,7 +177,6 @@ dark_theme_filepath = ['indigo/js/dark-theme.js']
 for filename in javascript_files:
     if filename in PIPELINE['JAVASCRIPT']:
         PIPELINE['JAVASCRIPT'][filename]['source_filenames'] += dark_theme_filepath
-  
 """,
         ),
         # for development
@@ -193,6 +189,22 @@ dark_theme_filepath = ['indigo/js/dark-theme.js']
 for filename in javascript_files:
     if filename in PIPELINE['JAVASCRIPT']:
         PIPELINE['JAVASCRIPT'][filename]['source_filenames'] += dark_theme_filepath
+
+MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
+""",
+        ),
+        # mcdaniel nov-2024: add INDIGO_STEPWISEMATH_ENV and INDIGO_STEPWISEMATH_PWRCSS_URL to the MFE_CONFIG
+        (
+            "openedx-lms-production-settings",
+            """
+MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
+MFE_CONFIG['INDIGO_STEPWISEMATH_ENV'] = "{{ INDIGO_STEPWISEMATH_ENV }}"
+MFE_CONFIG['INDIGO_STEPWISEMATH_PWRCSS_URL'] = "https://swm-openedx-us-{{ INDIGO_STEPWISEMATH_ENV }}-storage.s3.us-east-2.amazonaws.com/static/css/swpwrxblock.css"
+MFE_CONFIG['SITE_NAME'] = "Stepwise Math by Querium Corporation"
+MFE_CONFIG['FAVICON_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/stepwise-favicon-64x64-1.png"
+MFE_CONFIG['LOGO_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/Querium_StepWiseTM_Teal_Logo_High-Res.png"
+MFE_CONFIG['LOGO_WHITE_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/Querium_StepWiseTM_Teal_Logo_High-Res.png"
+MFE_CONFIG['LOGO_TRADEMARK_URL'] = "https://querium.com/"
 """,
         ),
     ]

@@ -19,6 +19,26 @@ instructions, because git commits are used to generate release notes:
 
 <!-- scriv-insert-here -->
 
+<a id='changelog-18.2.4'></a>
+## v18.2.4 (2024-11-18)
+
+- [Fix] move STEPWISEMATH_ENV assignment to mfe-dockerfile-base . (by @lpm0073)
+
+<a id='changelog-18.2.3'></a>
+## v18.2.3 (2024-11-08)
+
+- [Fix] Add STEPWISEMATH_ENV to the Dockerfile. (by @lpm0073)
+
+<a id='changelog-18.2.2'></a>
+## v18.2.2 (2024-11-01)
+
+- [Fix] Install StepwiseMath forks of MFE header and branding packages. (by @lpm0073)
+
+<a id='changelog-18.2.1'></a>
+## v18.2.1 (2024-10-11)
+
+- [Feature] Introduced theme toggle feature with enable/disable option and runtime switch between light and dark modes. (by @hinakhadim)
+
 <a id='changelog-18.1.1'></a>
 ## v18.1.1 (2024-08-27)
 

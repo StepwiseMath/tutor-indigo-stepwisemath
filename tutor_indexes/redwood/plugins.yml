@@ -1,0 +1,7 @@
+- name: stepwisemath
+  src: -e git+https://github.com/StepwiseMath/tutor-indigo-stepwisemath#egg=tutor-indigo-stepwisemath
+  url: https://github.com/StepwiseMath/tutor-indigo-stepwisemath
+  author: StepwiseMath
+  maintainer: lpm0073
+  description: |
+    Tutor plugin to enable Indigo for StepwiseMath

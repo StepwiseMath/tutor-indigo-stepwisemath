@@ -1,6 +1,19 @@
 Indigo, a cool blue theme for Open edX
 ======================================
 
+This is the primary mfe build tool for StepwiseMath's Indigo theme for Open edX. This repo does the following:
+
+1. It is scaffolding for the mfe build process.
+2. Beginning with Redwood, we now use the Overhang.io Indigo theme as a replacement for the legacy StepwiseMath custom theme repo `StepwiseMath/stepwise-edx-theme <https://github.com/StepwiseMath/stepwise-edx-theme>`_
+3. It is the top-level tool for implementing customizations to the MFE UI.
+4. Adds INDIGO_STEPWISEMATH_ENV, INDIGO_STEPWISEMATH_PWRCSS_URL to the openedx `MFE_CONFIG API <https://web.stepwisemath.ai/api/mfe_config/v1>`_. These values in turn are consumed by `StepwiseMath/frontend-component-header <https://github.com/StepwiseMath/frontend-component-header>`_ and added to the head of the ReactJS DOM.
+5. Sets the following MFE parameters: SITE_NAME, FAVICON_URL, LOGO_URL, LOGO_WHITE_URL, LOGO_TRADEMARK_URL
+
+Note that the mfe build process relies on two forked repositories:
+
+- `StepwiseMath/brand-openedx <https://github.com/StepwiseMath/brand-openedx>`_
+- `StepwiseMath/frontend-component-header <https://github.com/StepwiseMath/frontend-component-header>`_
+
 Indigo is an elegant, customizable theme for `Open edX <https://openedx.org>`__.
 
 .. image:: ./screenshots/01-landing-page.png
@@ -15,8 +28,9 @@ Indigo was specially developed to be used with `Tutor <https://docs.tutor.edly.i
 
 Install and enable Indigo plugin::
 
-    tutor plugins install indigo
-    tutor plugins enable indigo
+    pip install git+https://github.com/StepwiseMath/tutor-indigo-stepwisemath
+    tutor plugins install indigo-stepwisemath
+    tutor plugins enable indigo-stepwisemath
     tutor local launch
 
 The Indigo theme will be automatically enabled if you have not previously defined a theme. To override an existing theme, use the `settheme command <https://docs.tutor.edly.io/local.html#setting-a-new-theme>`__::
@@ -26,10 +40,11 @@ The Indigo theme will be automatically enabled if you have not previously define
 Configuration
 -------------
 
+- ``STEPWISEMATH_CONFIG_ENV`` (default: "prod")
 - ``INDIGO_WELCOME_MESSAGE`` (default: "The place for all your online learning")
 - ``INDIGO_PRIMARY_COLOR`` (default: "#3b85ff")
 - ``INDIGO_FOOTER_NAV_LINKS`` (default: ``[{"title": "About", "url": "/about"}, {"title": "Contact", "url": "/contact"}]``)
-- ``INDIGO_ENABLE_DARK_THEME`` (default: False)
+- ``INDIGO_ENABLE_DARK_TOGGLE`` (default: True)
 
 The ``INDIGO_*`` settings listed above may be modified by running ``tutor config save --set INDIGO_...=...``. For instance, to remove all links from the footer, run::
 
@@ -40,18 +55,14 @@ Or, to set the primary color to forest green, run::
     # Note: The nested quotes are needed in order to handle the hash (#) correctly.
     tutor config save --set 'INDIGO_PRIMARY_COLOR="#225522"'
 
-Enabling Dark Theme
+Theme Toggle Button
 -------------------
 
-To enable the dark theme for the whole platform, run::
+The theme toggle button is enabled by default when Tutor Indigo is installed. The theme can be switched from light to dark and vice versa. To disable it, run::
 
-    tutor config save --set INDIGO_ENABLE_DARK_THEME=True
+    tutor config save --set INDIGO_ENABLE_DARK_TOGGLE=false
     tutor images build openedx
-    tutor images build mfe
     tutor local start -d
-
-.. warning:: 
-    The dark theme can't be changed dynamically through any toggle button in platform. Using the above config variable, the platform will start with either Light theme or Dark theme.
 
 
 Customization
