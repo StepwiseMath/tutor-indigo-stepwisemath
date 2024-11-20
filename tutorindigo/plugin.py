@@ -167,6 +167,16 @@ RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx
 
 hooks.Filters.ENV_PATCHES.add_items(
     [
+        # for openedx Dockerfile builds
+        (
+            "openedx-dockerfile-minimal",
+            """
+            # mcdaniel: read by https://github.com/QueriumCorp/swpwrxblock during customized 
+            # pip install wheel to determine the source of the ReactJS swpwr zip package.
+            # see https://github.com/QueriumCorp/swpwrxblock/blob/main/swpwrxblock/post_install.py#L81
+            ENV STEPWISEMATH_ENV={{ INDIGO_STEPWISEMATH_ENV }}
+            """
+        ),
         # for production
         (
             "openedx-common-assets-settings",
