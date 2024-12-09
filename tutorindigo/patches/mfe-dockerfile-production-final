@@ -1,0 +1,8 @@
+# copy node_modules to the openedx build directory
+# mcdaniel: Copy node_modules to the final container so that we can audit the final results.
+# This is a temporary measure until we can figure out how to get the forked header to run inside the browser. It's HUGE.
+
+# -------------------------------------------------------------
+# DON'T DO THIS IN PRODUCTION
+# -------------------------------------------------------------
+# COPY --from=learning-prod /openedx/app/ /openedx/app/

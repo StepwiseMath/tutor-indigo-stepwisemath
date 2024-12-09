@@ -1,0 +1,9 @@
+# mcdaniel nov-2024: add INDIGO_STEPWISEMATH_ENV and INDIGO_STEPWISEMATH_PWRCSS_URL to the MFE_CONFIG
+MFE_CONFIG['INDIGO_ENABLE_DARK_TOGGLE'] = {{ INDIGO_ENABLE_DARK_TOGGLE }}
+MFE_CONFIG['INDIGO_STEPWISEMATH_ENV'] = "{{ INDIGO_STEPWISEMATH_ENV }}"
+MFE_CONFIG['INDIGO_STEPWISEMATH_PWRCSS_URL'] = "https://swm-openedx-us-{{ INDIGO_STEPWISEMATH_ENV }}-storage.s3.us-east-2.amazonaws.com/static/css/swpwrxblock.css"
+MFE_CONFIG['SITE_NAME'] = "Stepwise Math by Querium Corporation"
+MFE_CONFIG['FAVICON_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/stepwise-favicon-64x64-1.png"
+MFE_CONFIG['LOGO_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/Querium_StepWiseTM_Teal_Logo_High-Res.png"
+MFE_CONFIG['LOGO_WHITE_URL'] = "https://stepwisemath.ai/wp-content/uploads/2021/12/Querium_StepWiseTM_Teal_Logo_High-Res.png"
+MFE_CONFIG['LOGO_TRADEMARK_URL'] = "https://querium.com/"

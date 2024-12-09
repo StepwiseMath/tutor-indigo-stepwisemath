@@ -3,6 +3,12 @@
 SRC_DIRS = ./tutorindigo
 BLACK_OPTS = --exclude templates ${SRC_DIRS}
 
+init:
+	@if [ -d "venv" ]; then rm -rf venv; fi
+	python3 -m venv venv
+	. venv/bin/activate
+	pip install -r requirements.txt
+
 # Warning: These checks are not necessarily run on every PR.
 test: test-lint test-types test-format  # Run some static checks.
 

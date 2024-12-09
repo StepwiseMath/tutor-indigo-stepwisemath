@@ -20,6 +20,14 @@ instructions, because git commits are used to generate release notes:
 <!-- scriv-insert-here -->
 
 <a id='changelog-18.2.7'></a>
+## v18.2.7 (2024-12-09)
+
+- [REFACTOR] port patches to individual files located in tutorindigo/patches/
+- [Chore] add custom CSS file hook to openedx dashboard mfe
+- [Chore] bump python minimum version to 3.9
+
+
+<a id='changelog-18.2.7'></a>
 ## v18.2.4 (2024-11-20)
 
 - [Fix] add a openedx-dockerfile-minimal build patch to add STEPWISEMATH_ENV environement variable to Dockerfile.
