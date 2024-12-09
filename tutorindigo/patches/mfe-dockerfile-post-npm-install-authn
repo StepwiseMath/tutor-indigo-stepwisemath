@@ -1,1 +1,5 @@
+# @formatter:off
+# This is a Dockerfile patch
+# Meta information: Disable format on save
+
 RUN --mount=type=cache,target=/root/.npm,sharing=shared npm install --save '@edx/brand@git+https://github.com/StepwiseMath/brand-openedx.git#open-release/redwood.master'

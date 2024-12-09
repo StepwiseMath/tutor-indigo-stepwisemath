@@ -1,3 +1,7 @@
+# @formatter:off
+# This is a Dockerfile patch
+# Meta information: Disable format on save
+
 # copy node_modules to the openedx build directory
 # mcdaniel: Copy node_modules to the final container so that we can audit the final results.
 # This is a temporary measure until we can figure out how to get the forked header to run inside the browser. It's HUGE.

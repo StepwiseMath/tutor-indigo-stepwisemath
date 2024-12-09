@@ -1,3 +1,7 @@
+# @formatter:off
+# This is a Python module patch
+# Meta information: Disable format on save
+
 # Include js file in lms main.html, main_django.html, and certificate.html
 javascript_files = ['base_application', 'application', 'certificates_wv']
 dark_theme_filepath = ['indigo/js/dark-theme.js']
